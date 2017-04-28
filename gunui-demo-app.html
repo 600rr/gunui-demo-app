@@ -1,0 +1,72 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="demo/demo-imports.html">
+<!--
+`gunui-demo-app`
+Main documentation for GunUi
+This will be loaded by individual elements!
+@demo demo/index.html
+-->
+
+<dom-module id="gunui-demo-app">
+  <template>
+    <style>
+      :host { display: block;}
+    </style>
+   	<paper-drawer-panel>
+    	<paper-header-panel drawer>
+      	<paper-toolbar>Menu</paper-toolbar>
+
+      	<paper-menu id="menu" selected="{{currentUrl}}" attr-for-selected="data-url" on-iron-activate="navigate">
+
+
+
+      	</paper-menu>
+      	<div id="noresults">Sorry, no results</div>
+      </paper-header-panel>
+
+      <paper-header-panel main>
+      	<paper-toolbar>
+      		<paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+      		<div class="title small">{{title}}</div>
+      	</paper-toolbar>
+
+      	<div id="content">
+					<content></content>
+				</div>
+
+			</paper-header-panel>
+		</paper-drawer-panel>
+	</template>
+  <script>
+    Polymer({
+
+      is: 'gunui-demo-app',
+
+      properties: {
+       currentUrl: {
+					type: String,
+					value: function(){
+						return location.href.replace(this.resolveUrl('..'),'');
+					}
+				},
+				searchTerm: {
+					type: String,
+					value: '',
+					observer: 'search'
+				}
+      },
+
+      ready(){
+			
+			},
+			navigate(event, item){
+				
+			},
+			search(){
+
+			}
+			
+
+    });
+  </script>
+</dom-module>
