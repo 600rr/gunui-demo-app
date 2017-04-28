@@ -1,73 +1,44 @@
-Getting started
+GunUi
 ===
-First of all you have to set up a `<paper-datatable>` element. You provide it with a
-`data` attribute which should be an array of `object`'s. Additionally you decide
-whether you want the `data-table` to be `selectable`. At this point we get something
-like
+> A collection of widgets to visualize your Gun data. 
 
-	<paper-datatable data="{{data}}" selectable multi-selection>
-	</paper-datatable>
+So you've played with Gun ? You've build your 'todo-app' with javascript, the Gun-API, HTML and CSS? <br>
+And now you're ready to start that really big application with a lot of data and complexity...
 
-Next we have to define our columns, this is done by adding child elements of the type
-`<paper-datatable-column>`. A fairly minimal example would be
+You're going to create a lot of `gun.get().on(callback)` stuff in there, and in all those callbacks you will have to keep that browser in sync... updating lists, changing content... across pages...<br>
+I guess we're back in 'callback hell'.
 
-	<paper-datatable data="{{data}}" selectable multi-selection>
-		<paper-datatable-column header="Title" property="title" sortable>
-		</paper-datatable-column>
-	</paper-datatable>
+<i>Well maybe not</i><br>
+GunUi is a collection of Polymer webcomponents created especially for Gun. It tries to prevent that 'callback hell', because every element handles its own peace of data.
 
-If we want to format our content in a custom way we can easily do this by adding a `<template>`
-element like so:
+> The 'todo-app' is actually a tutorial in this documentation 😉.<br>
+> Take a look at [Todo]()
 
-	<paper-datatable data="{{data}}" selectable multi-selection>
-		<paper-datatable-column header="Title" property="title" sortable editable>
-			<template>
-				<paper-input value="{{value}}">
-			</template>
-		</paper-datatable-column>
-	</paper-datatable>
-
-Before you start there is one choice you have to make: Whether you wish to use the `<paper-datable>` on it's own or
-whether you wish to use the full `<paper-datatable-card>` element. The `<paper-datatable-card>` element wraps a 
- `<paper-datatable>` element and handles things like pagination and lazy loading of data. So there is a very simple rule
- of thumb:
- 
-  - Use the `<paper-datatable>` if your table is going to show a fixed number of rows.
-  - Use the `<paper-datatable-card>` if your table has a dynamic number of rows. 
-
-And it's also a cool idea to check [the different `resize-behavior`s](resize-behavior.html) and pick one you like.
-
-Editable columns
+Gun awareness
 ===
-There are two ways to define editable columns, the easiest way is to just set the `editable` attribute like
+Every element is - what i like to call - 'Gun aware'...meaning that every element will be 'linked' to a certain data-point in your graph-data by just setting two attributes; 'soul' and 'prop'.
 
-	<paper-datatable-column header="Author" property="title" type="String" editable>
-	</paper-datatable-column>
+It will look like 
+```
+	<gun-ui-ledbutton soul="livingroom" prop="lights"></gun-ui-ledbutton>
+```
 
-which uses default `<template>`'s for simple `type="String"` and `type="Number"` cases. You can always set your own
-`<template>` as well in which case `[editable]` will indicate to the system that a tap inside the cell should not select
-the row.
+`<gun-ui-ledbutton>` translates this as `gun.get("livingroom").get("lights")`.
 
-	<paper-datatable-column header="Author" property="title" editable>
-		<template>
-			 <paper-input value="{{value}}" no-label-float></paper-input>
-		</template>
-	</paper-datatable-column>
+To let the element be truly 'Gun-aware' it needs to change it's 'state' when his data-point changes...for this we add another attribute; "subscribe".
 
-Inside the template you can access the following 3 bindings:
+So now it looks like 
+```
+	<gun-ui-ledbutton soul="livingroom" prop="lights" subscribe></gun-ui-ledbutton>
+```
 
- - `{{value}}` which is the value of the current cell;
- - `{{item}}` which is the entire row; 
- - and `{{column}}` which references the current column.
+When the data-point `gun.get("livingroom").get("lights")` changes...so does the  `<gun-ui-ledbutton>`.
 
-Additionally it's possible to load the `<template>` instead of inline. The will cause a small dialog to be shown when
- the user taps on the cell. See the first table in [this demo](editable.html) for an example of this. The big advantage
- of this is performance as not every cell needs to be initalized.
+> There is a reason that i don't let the elements 'subscribe' by default...because whe have an alternative.<br>
+> more on that in [Subscribe...or not]()
 
-Polymer Keys and Selections
+These docs
 ===
-You might encounter keys that look like `#1` whilst working with `<paper-datatable>` these keys are Polymer's internal
-keys on the `paperDatatable.data` collection. You can use those just like they would be a normal index in Polymer
-functions, so stuff like the following works:
+This page is the main documentation for all GunUi related stuff. It provides you with element specific documentation and demo's and to a few tutorials.
 
-	this.$.paperDatatable.set('data.#1.author', 'Tom');
+I hope you will enjoy Gun and Polymer 😀
