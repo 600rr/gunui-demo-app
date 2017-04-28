@@ -17,6 +17,15 @@ This will be loaded by individual elements!
       	<paper-toolbar>Menu</paper-toolbar>
 
       	<paper-menu id="menu" selected="{{currentUrl}}" attr-for-selected="data-url" on-iron-activate="navigate">
+          <paper-item data-url="../gunui-demo-app/docs/docsmain.html?gunui">GunUi</paper-item>  
+<!-- 
+  you could be actually IN the requested element!! 
+  data-url should point to the elements demo 
+  at https://stefdv.github.io/gun-ui-<element>/components/gun-ui-<element>/
+  which - in turn -  should point to 'demo/index.html'
+
+-->
+          <paper-item data-url="https://stefdv.github.io/gun-ui-ledbutton/components/gun-ui-ledbutton/" class="indent"><code>&lt;gun-ui-ledbutton&gt;</code></paper-item>
 
 
 
@@ -46,6 +55,7 @@ This will be loaded by individual elements!
        currentUrl: {
 					type: String,
 					value: function(){
+            console.log('currentUrl : ', location.href.replace(this.resolveUrl('..'),''))
 						return location.href.replace(this.resolveUrl('..'),'');
 					}
 				},
@@ -56,11 +66,21 @@ This will be loaded by individual elements!
 				}
       },
 
-      ready(){
-			
+    ready(){
+		  this.title = document.title;
+      document.title += ' - GunUi';
+      var link = document.createElement('link');
+      link.type = 'image/x-icon';
+      link.rel = 'shortcut icon';
+      link.href = this.resolveUrl('./icon.png');
+      document.getElementsByTagName('head')[0].appendChild(link);
 			},
-			navigate(event, item){
-				
+			navigate(e, detail){
+				console.log(e,detail,detail.item.dataset)
+        if(detail.selected){
+          console.log(this.resolveUrl(detail.selected))
+          location.href = this.resolveUrl(detail.selected);
+        }
 			},
 			search(){
 
