@@ -6,11 +6,34 @@ Main documentation for GunUi
 This will be loaded by individual elements!
 @demo demo/index.html
 -->
-
+<!-- 
+  data-url should point to the elements demo 
+  at https://stefdv.github.io/gun-ui-<element>/components/gun-ui-<element>/
+  which - in turn -  should point to 'demo/index.html'
+-->
 <dom-module id="gunui-demo-app">
   <template>
     <style>
       :host { display: block;}
+      paper-menu hr { border-bottom-color:rgba(240,240,240);border-top:0px;}
+      iron-icon {
+        padding-right: 10px;
+        width: 34px;
+      }
+      paper-item {
+        font-size: 12px;
+        line-height: 12px;
+        cursor: pointer;
+      }
+      paper-item.indent{
+        margin-left: 20px;
+      }
+      paper-item.unindent{
+        margin-left: 0px;
+      }
+      .menu-content{
+        padding-left: 10px;
+      }
     </style>
    	<paper-drawer-panel>
     	<paper-header-panel drawer>
@@ -18,19 +41,32 @@ This will be loaded by individual elements!
 
       	<paper-menu id="menu" selected="{{currentUrl}}" attr-for-selected="data-url" on-iron-activate="navigate">
           <paper-item data-url="../gunui-demo-app/docs/docsmain.html?gunui">GunUi</paper-item>  
-<!-- 
-  you could be actually IN the requested element!! 
-  data-url should point to the elements demo 
-  at https://stefdv.github.io/gun-ui-<element>/components/gun-ui-<element>/
-  which - in turn -  should point to 'demo/index.html'
 
--->
-          <paper-item data-url="https://stefdv.github.io/gun-ui-ledbutton/components/gun-ui-ledbutton/" class="indent"><code>&lt;gun-ui-ledbutton&gt;</code></paper-item>
+          <hr> <!-- helper elements -->      
+          <paper-submenu id="submenu-elements">
+            <paper-item class="menu-trigger">
+              <iron-icon icon="menu"></iron-icon>
+              <span>Supporting Elements</span>
+            </paper-item>
+            <paper-menu class="menu-content" selected="{{currentUrl}}" attr-for-selected="data-url" on-iron-activate="navigate">
+              <paper-item data-url="[[demoLinks.mixin.url]]" class="indent"><code>&lt;[[demoLinks.mixin.title]]&gt;</code></paper-item>
+              <paper-item data-url="[[demoLinks.led.url]]" class="indent"><code>&lt;[[demoLinks.led.title]]&gt;</code></paper-item>
+            </paper-menu>
+          </paper-submenu>
 
+          <hr> <!-- elements -->      
+          <paper-submenu id="submenu-elements">
+            <paper-item class="menu-trigger">
+              <iron-icon icon="menu"></iron-icon>
+              <span>Elements</span>
+            </paper-item>
+            <paper-menu class="menu-content" selected="{{currentUrl}}" attr-for-selected="data-url" on-iron-activate="navigate">
+              <paper-item data-url="[[demoLinks.ledbutton.url]]" class="indent"><code>&lt;[[demoLinks.ledbutton.title]]&gt;</code></paper-item>
+            </paper-menu>
+          </paper-submenu>
 
 
       	</paper-menu>
-      	<div id="noresults">Sorry, no results</div>
       </paper-header-panel>
 
       <paper-header-panel main>
@@ -63,7 +99,16 @@ This will be loaded by individual elements!
 					type: String,
 					value: '',
 					observer: 'search'
-				}
+				},
+        demoLinks:{
+          type:Object,
+          value:{
+            ledbutton:{url:"https://stefdv.github.io/gun-ui-ledbutton/components/gun-ui-ledbutton/",title:"gun-ui-ledbutton"},
+            mixin:{url:"https://stefdv.github.io/gun-ui-mixin/components/gun-ui-mixin/",title:"gun-ui-mixin"},
+            led:{url:"https://stefdv.github.io/gun-ui-led/components/gun-ui-led/",title:"gun-ui-led"},
+            
+          }
+        }
       },
 
     ready(){
