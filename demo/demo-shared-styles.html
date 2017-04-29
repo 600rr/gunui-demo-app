@@ -180,6 +180,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-variant: small-caps;
       color: rgba(0,0,0,.8);
     }
+     .strikethrough {
+       position: relative;
+     }
+     .strikethrough:before {
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 50%;
+            right: 0;
+            border-top: 1px solid;
+            border-color: inherit;
+
+            -webkit-transform:rotate(-5deg);
+            -moz-transform:rotate(-5deg);
+            -ms-transform:rotate(-5deg);
+            -o-transform:rotate(-5deg);
+            transform:rotate(-5deg);
+          }
+     .attribute {
+       color: #690;
+       font-family: monospace;
+      }
 
     </style>
   </template>
